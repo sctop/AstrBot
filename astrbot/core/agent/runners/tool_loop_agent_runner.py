@@ -97,6 +97,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
     async def _iter_llm_responses(self) -> T.AsyncGenerator[LLMResponse, None]:
         """Yields chunks *and* a final LLMResponse."""
+
+        """
         # 将空白 content 替换为相应字符串
         should_replace, string_replacement = _get_tool_blank_replacement_settings(
             self.run_context
@@ -116,6 +118,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 if info.content == "":
                     info.content = string_replacement
                     logger.warning("Calling LLM, but blank content found; replaced")
+        """
 
         if self.streaming:
             stream = self.provider.text_chat_stream(**self.req.__dict__)

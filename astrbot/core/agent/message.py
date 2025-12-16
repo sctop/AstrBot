@@ -166,6 +166,20 @@ class Message(BaseModel):
                 "content is required unless role='assistant' and tool_calls is not None"
             )
         return self
+    
+    def model_dump(self, *args, **kwargs):
+        temp = super().model_dump(*args, **kwargs)
+        temp_content = temp.get('content')
+        if temp_content is None or temp_content == ' ' or temp_content == '':
+            print('[MMMMMMMMMMMMMMMMMMMM] hey there! we are seeing sth weird!')
+            try:
+                del temp['content']
+            except KeyError:
+                # if "content" doesn't exist in the first place (?)
+                pass
+        
+        
+        return temp
 
 
 class AssistantMessageSegment(Message):

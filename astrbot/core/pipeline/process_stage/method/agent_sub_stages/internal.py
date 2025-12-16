@@ -334,6 +334,7 @@ class InternalAgentSubStage(Stage):
         messages.append({"role": "assistant", "content": llm_response.completion_text})
         messages = list(filter(lambda item: "_no_save" not in item, messages))
 
+        """
         # 对每个 message 的 content 进行针对性检查和更改
         # 读取上下文中的配置
         should_replace, string_replacement = _get_tool_call_placeholder_settings(
@@ -345,6 +346,7 @@ class InternalAgentSubStage(Stage):
                 if message.get("content", "") == string_replacement:
                     message["content"] = ""
                     logger.warning("reverted tool_call-specific message to blank text")
+        """
 
         await self.conv_manager.update_conversation(
             event.unified_msg_origin,
